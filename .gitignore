@@ -20,3 +20,6 @@ cabal.sandbox.config
 
 ### Stack ###
 .stack-work
+
+### Emacs ###
+TAGS
