@@ -28,7 +28,6 @@ executable MDP-exe
   main-is:             Main.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
-                     , containers
                      , MDP
   default-language:    Haskell2010
 
@@ -37,6 +36,9 @@ test-suite MDP-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
+                     , containers
+                     , tasty
+                     , tasty-hunit
                      , MDP
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
