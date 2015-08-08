@@ -1,4 +1,6 @@
 
+module TestPlanning where
+
 import Test.Tasty
 import Test.Tasty.HUnit
 import qualified Data.Set  as S
@@ -74,9 +76,3 @@ unitTests =
                       (S.toList (states sgmdp)) @?=
                   EQ)]
 
-tests :: TestTree
-tests = testGroup "Tests" [unitTests]
-
-
-main :: IO ()
-main = defaultMain tests

@@ -1,4 +1,5 @@
-module Main where
+
+module TestDP where
 
 import qualified Data.Set as S
 import MDP
@@ -30,6 +31,7 @@ action s a
 
 sgTransition :: SGAction -> SGState -> SGState -> Double
 sgTransition a s s'
+  | s' == (0, 0) = 0.0
   | s' == action s a = 1.0
   | otherwise = 0.0
 
@@ -51,8 +53,5 @@ sgMDP =
     }
 
 
-calcVI :: [(SGState, SGAction)]
-calcVI = map (\s -> (s, valueIteration sgMDP 5 s)) (S.toList (states sgMDP))
-
-main :: IO ()
-main = print calcVI
+calcVI :: [SGAction]
+calcVI = map (valueIteration sgMDP 7) (S.toList (states sgMDP))

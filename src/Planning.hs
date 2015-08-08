@@ -29,4 +29,4 @@ policyEvaluation mdp policy = evalVF
                                        transition mdp a s s' *
                                        evalVF (k - 1) s')
                                  (S.toList (states mdp)))))
-                 (S.toList (actions mdp)))
+                 (S.toList (actions mdp))) 

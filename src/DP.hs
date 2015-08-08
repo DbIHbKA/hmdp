@@ -5,11 +5,13 @@ import Data.Map (Map)
 import qualified Data.Map.Strict as M
 import qualified Data.Set as S
 import Numeric.LinearAlgebra.Data
-       (Matrix, Vector, fromList, (!), toRows, (¿))
+       (Matrix, Vector, (!), (¿), (><), maxIndex)
 import Numeric.LinearAlgebra.HMatrix as H
 
 import MDP
 import Planning
+
+import Debug.Trace
 
 
 data MDPM s a = MDPM
@@ -20,6 +22,7 @@ data MDPM s a = MDPM
     , gammam :: Double             -- discount
     , sizeStates :: Int           -- S
     , sizeActions :: Int          -- A
+    , actionsr :: Map Int a
     }
 
 
@@ -33,6 +36,7 @@ prepareMDP mdp =
     , gammam = gamma mdp
     , sizeStates = S.size (states mdp)
     , sizeActions = S.size (actions mdp)
+    , actionsr = M.fromList (zip [0..] (S.toList (actions mdp)))
     }
   where
     statesM = M.fromList (zip (S.toList (states mdp)) [0 ..])
@@ -79,5 +83,9 @@ valueIterationM mdpm k v
                  (M.keys (actionsm mdpm)))
 
 
-valueIteration :: (Ord a) => MDP s a -> Int -> s -> a
-valueIteration mdp k s = undefined
+valueIteration :: (Ord a, Ord s) => MDP s a -> Int -> s -> a
+valueIteration mdp k s = actionsr mdpm M.! maxIndex (vk ! (statesm mdpm M.! s))
+  where
+    mdpm = prepareMDP mdp
+    v0 = (sizeStates mdpm >< sizeActions mdpm) [0,0 ..]
+    vk = valueIterationM mdpm k v0

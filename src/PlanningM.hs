@@ -89,4 +89,11 @@ matrixPolicyEvaluation :: MDPM s a -> Int -> Vector Double
 matrixPolicyEvaluation mdpm = evalVF (konst 0.0 (sizeStates mdpm))
   where
     evalVF v 0 = v
-    evalVF v k = evalVF (rewardm mdpm + gammam mdpm `scale` (transitionm mdpm H.#> v)) (k-1)
+    evalVF v k =
+        evalVF
+            (rewardm mdpm + gammam mdpm `scale` (transitionm mdpm H.#> v))
+            (k - 1)
+
+
+matrixPolicyImprove :: MDPM s a -> Vector Double -> Matrix Double
+matrixPolicyImprove mdpm vf = undefined
